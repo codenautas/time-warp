@@ -1,34 +1,29 @@
 "use strict";
 
-// var auditCopy = require('audit-copy');
 var discrepances = require('discrepances');
 
 var TimeWarp = require('..');
-/*
-function compareTest(theObject1, theObject2){
-    var result = discrepances(theObject1, theObject2);
-    console.log(result,theObject1, theObject2);
-    for(var __ in result){
-        console.log('DIFS');
-        console.log(result);
-        throw new Error("differances "+JSON.stringify(result));
-    }
-}
-*/
+
 var compareTest = discrepances.showAndThrow;
 
 var quartersFixtures=[
     {in:'I'          , expected:new Error('not a time string')},
     {in:'2016'       , expected:TimeWarp.JSON4reviver({precision:'year', year:2016})},
-    {in:'2016q1'     , expected:TimeWarp.JSON4reviver({precision:'trimester', year:2016, trimester:1})},
-    {in:'2016q1'     , expected:TimeWarp.trim({year:2016, trimester:1})},
-    {in:'2016Q2'     , expected:TimeWarp.trim({year:2016, trimester:2})},
-    {in:'2016 Trim 2', expected:TimeWarp.trim({year:2016, trimester:2})},
-    {in:'3 Trim 2016', expected:TimeWarp.trim({year:2016, trimester:3})},
-    {in:'I.2017'     , expected:TimeWarp.trim({year:2016, trimester:1})},
-    {in:'II. 2017'   , expected:TimeWarp.trim({year:2016, trimester:2})},
-    {in:'2017-III'   , expected:TimeWarp.trim({year:2016, trimester:3})},
-    {in:'IV 2017'    , expected:TimeWarp.trim({year:2016, trimester:4})},
+    {in:'2016q1'     , expected:TimeWarp.JSON4reviver({precision:'trim', year:2016, trim:1})},
+    {in:'2016q2'     , expected:TimeWarp.trim({year:2016, trim:2})},
+    {in:'2016Q1'     , expected:TimeWarp.trim({year:2016, trim:1})},
+    {in:'2016 Trim 2', expected:TimeWarp.trim({year:2016, trim:2})},
+    {in:'3 Trim 2016', expected:TimeWarp.trim({year:2016, trim:3})},
+    {in:'I.2017'     , expected:TimeWarp.trim({year:2017, trim:1})},
+    {in:'II. 2017'   , expected:TimeWarp.trim({year:2017, trim:2})},
+    {in:'2017-III'   , expected:TimeWarp.trim({year:2017, trim:3})},
+    {in:'IV 2017'    , expected:TimeWarp.trim({year:2017, trim:4})},
+    {in:'I.18'       , expected:TimeWarp.trim({year:2018, trim:1})},
+    {in:'I.08'       , expected:TimeWarp.trim({year:2008, trim:1})},
+    {in:'IS08'       , expected:TimeWarp.sem({year:2008, sem:1})},
+    {in:'1 sem 2015' , expected:TimeWarp.sem({year:2015, sem:1})},
+    {in:'14semest II', expected:TimeWarp.sem({year:2014, sem:2})},
+    {in:'I.8'        , expected:new Error('invalid year')},
 ];
 
 describe("quarters", function(){
@@ -37,15 +32,14 @@ describe("quarters", function(){
             it(fixture.in);
         }else{
             it(fixture.in, function(){
+                var obtained;
                 try{
                     var obtained = TimeWarp.parse(fixture.in);
-                    compareTest(obtained, fixture.expected);
                 }catch(err){
-                    compareTest(err, fixture.expected);
+                    obtained = err;
                 }
+                compareTest(obtained, fixture.expected);
             });
         }
-    });
-    it("compare fixtures", function(){
     });
 });
