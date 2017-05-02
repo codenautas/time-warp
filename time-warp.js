@@ -101,11 +101,11 @@ TimeWarp.precisions = [
 TimeWarp.precisionsRegExp = new RegExp(TimeWarp.precisions.map(function(p){ return p.name; }).join('|'));
 
 TimeWarp.property = {
-    precision: {validate:function(x){ return TimeWarp.precisionsRegExp.test(x); }, text:true},
-    year     : {validate:function(x){ return !isNaN(x) && typeof x === "number";}, property:{precision:true, year:true}},
-    trim     : {validate:validateIntRange(1,4) , property:{precision:true, year:true, trim :true}},
-    sem      : {validate:validateIntRange(1,2) , property:{precision:true, year:true, sem  :true}},
-    month    : {validate:validateIntRange(1,12), property:{precision:true, year:true, month:true}}
+    precision: {validate:function(x){ return TimeWarp.precisionsRegExp.test(x); }, text:true, skipInToString:true},
+    year     : {validate:function(x){ return !isNaN(x) && typeof x === "number";}, property:{precision:true, year:true}, prefix:''},
+    trim     : {validate:validateIntRange(1,4) , property:{precision:true, year:true, trim :true}, prefix:'t'},
+    sem      : {validate:validateIntRange(1,2) , property:{precision:true, year:true, sem  :true}, prefix:'s'},
+    month    : {validate:validateIntRange(1,12), property:{precision:true, year:true, month:true}, prefix:'-'}
 };
 
 TimeWarp.year = function parse(year){
@@ -150,6 +150,20 @@ TimeWarp.parse = function parse(text){
 TimeWarp.JSON4reviver = function JSON4reviver(value){
     var rta = new TimeWarp(value);
     return rta;
+}
+
+TimeWarp.prototype.toString = function toString(){
+    var rta='';
+    likeAr(TimeWarp.property).map(function(prop, name){
+        if(prop.skipInToString){
+            return '';
+        }
+        if(prop in this){
+            return prop.prefix||this[prop];
+        }else{
+            return '';
+        }
+    },this).join('');
 }
 
 return TimeWarp;
