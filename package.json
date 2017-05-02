@@ -1,7 +1,7 @@
 {
   "name": "time-warp",
   "description": "tools for handling time",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "repository": "codenautas/time-warp",
   "license": "MIT",

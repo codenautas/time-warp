@@ -2,7 +2,7 @@
 tools for handling time
 
 
-![designing](https://img.shields.io/badge/stability-designing-red.svg)
+![extending](https://img.shields.io/badge/stability-extending-orange.svg)
 [![npm-version](https://img.shields.io/npm/v/time-warp.svg)](https://npmjs.org/package/time-warp)
 [![downloads](https://img.shields.io/npm/dm/time-warp.svg)](https://npmjs.org/package/time-warp)
 [![build](https://img.shields.io/travis/codenautas/time-warp/master.svg)](https://travis-ci.org/codenautas/time-warp)
