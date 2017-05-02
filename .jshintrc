@@ -3,5 +3,5 @@
     "forin": true,
     "curly": true,
     "strict": "global",
-    "predef": [ "module", "exports" ]
+    "predef": [ "module", "exports", "require" ]
 } 

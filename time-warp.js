@@ -32,7 +32,7 @@ var regexplicit = require('regexplicit');
 
 var changing = require('best-globals').changing;
 
-var TimeWarp = function TimeWarp(object, precision){
+TimeWarp = function TimeWarp(object, precision){
     likeAr(TimeWarp.property).forEach(function(prop, name){
         if(name in object){
             var value = object[name];
@@ -54,7 +54,7 @@ var TimeWarp = function TimeWarp(object, precision){
         }
     },this);
     TimeWarp.property.precision.validate(this.precision);
-}
+};
 
 function validateIntRange(from,to){
     return function(n){return n>=from && n<=to && n===Math.abs(n);};
@@ -110,7 +110,7 @@ TimeWarp.property = {
 
 TimeWarp.year = function parse(year){
     return new TimeWarp({year:year}, 'year');
-}
+};
 
 function completeYearAndValidateMinimumLength(o){
     if(o.year<100 && o.year>=0){
@@ -125,12 +125,12 @@ function completeYearAndValidateMinimumLength(o){
 TimeWarp.trim = function parse(o){
     o=completeYearAndValidateMinimumLength(o);
     return new TimeWarp(o,'trim');
-}
+};
 
 TimeWarp.sem = function parse(o){
     o=completeYearAndValidateMinimumLength(o);
     return new TimeWarp(o,'sem');
-}
+};
 
 TimeWarp.parse = function parse(text){
     var pc = TimeWarp.precisions.lazySome(function(precisionDef){
@@ -145,26 +145,25 @@ TimeWarp.parse = function parse(text){
     }else{
         throw new Error('not a time string');
     }
-}
+};
 
 TimeWarp.JSON4reviver = function JSON4reviver(value){
     var rta = new TimeWarp(value);
     return rta;
-}
+};
 
 TimeWarp.prototype.toString = function toString(){
-    var rta='';
-    likeAr(TimeWarp.property).map(function(prop, name){
+    return likeAr(TimeWarp.property).map(function(prop, name){
         if(prop.skipInToString){
             return '';
         }
-        if(prop in this){
-            return prop.prefix||this[prop];
+        if(name in this){
+            return prop.prefix+this[name];
         }else{
             return '';
         }
     },this).join('');
-}
+};
 
 return TimeWarp;
 

@@ -23,7 +23,7 @@ var quartersFixtures=[
     {in:'IS08'       , tw:TimeWarp.sem({year:2008, sem:1})},
     {in:'1 sem 2015' , text:'2015s1' , tw:TimeWarp.sem({year:2015, sem:1})},
     {in:'14semest II', tw:TimeWarp.sem({year:2014, sem:2})},
-    {in:'I.8'        , tw:new Error('invalid year')},
+    {in:'I.8'        , tw:new Error('not a time string')},
 ];
 
 describe("quarters", function(){
