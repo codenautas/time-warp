@@ -12,7 +12,7 @@
   "dependencies": {
     "best-globals": "~0.8.1",
     "lazy-some": "~0.1.0",
-    "like-ar": "~0.1.0",
+    "like-ar": "~0.2.0",
     "regexplicit": "~0.1.1"
   },
   "devDependencies": {
