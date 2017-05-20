@@ -1,7 +1,7 @@
 {
   "name": "time-warp",
   "description": "tools for handling time",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Codenautas <codenautas@googlegroups.com>",
   "repository": "codenautas/time-warp",
   "license": "MIT",
@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "istanbul": "~0.4.5",
-    "mocha": "~3.3.0",
+    "mocha": "~3.4.1",
     
     "discrepances": "~0.1.3"
   },
